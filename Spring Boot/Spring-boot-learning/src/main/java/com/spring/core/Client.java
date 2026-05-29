@@ -8,9 +8,8 @@ public class Client {
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
 
         Car car = applicationContext.getBean(Car.class);
-        car.move();
-
         Bike bike = applicationContext.getBean(Bike.class);
+        car.move();
         bike.move();
 
         Traveller traveller = applicationContext.getBean(Traveller.class);

@@ -1,8 +1,11 @@
 package com.spring.core;
 
-public class Bike implements Vehicle{
+import org.springframework.stereotype.Component;
+
+@Component("bike")
+public class Bike implements Vehicle {
     @Override
     public void move() {
-        System.out.println("The bike is moving");
+        System.out.println("Bike is moving");
     }
 }
