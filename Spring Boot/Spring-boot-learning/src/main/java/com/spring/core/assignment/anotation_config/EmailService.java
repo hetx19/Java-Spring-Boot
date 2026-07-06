@@ -1,4 +1,4 @@
-package com.spring.core.assignment;
+package com.spring.core.assignment.anotation_config;
 
 import org.springframework.stereotype.Component;
 
