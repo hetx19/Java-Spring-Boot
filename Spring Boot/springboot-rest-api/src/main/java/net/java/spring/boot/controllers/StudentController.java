@@ -2,6 +2,7 @@ package net.java.spring.boot.controllers;
 
 import net.java.spring.boot.bean.Student;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -13,14 +14,16 @@ public class StudentController {
 
     // http://localhost:8080/student
     @GetMapping("student")
-    public Student getStudent() {
+    public ResponseEntity<Student> getStudent() {
         Student student = new Student("1", "Harshal", "Savaliya");
-        return student;
+//        return new ResponseEntity<>(student, HttpStatus.OK);
+        return ResponseEntity.ok().header("custom-header", "Harshal").body(student);
     }
+
 
     // http://localhost:8080/students
     @GetMapping("students")
-    public List<Student> getStudents() {
+    public ResponseEntity<List<Student>> getStudents() {
         List<Student> students = new ArrayList<>();
 
         students.add(new Student("1", "Harshal", "Savaliya"));
@@ -28,15 +31,17 @@ public class StudentController {
         students.add(new Student("3", "Deepak", "Kumar"));
         students.add(new Student("4", "Priya", "Verma"));
 
-        return students;
+        return ResponseEntity.ok(students);
     }
 
     // Rest API with Path Variable
 
     // http://localhost:8080/students/1/harshal/savaliya
     @GetMapping("students/{id}/{first-name}/{last-name}")
-    public Student getStudentDetails(@PathVariable("id") String rollNumber, @PathVariable("first-name") String firstName, @PathVariable("last-name") String lastName) {
-        return new Student(rollNumber, firstName, lastName);
+    public ResponseEntity<Student> getStudentDetails(@PathVariable("id") String rollNumber, @PathVariable("first-name") String firstName, @PathVariable("last-name") String lastName) {
+        Student student = new Student(rollNumber, firstName, lastName);
+
+        return ResponseEntity.ok(student);
     }
 
     // Rest API with Request Parameters
@@ -44,8 +49,10 @@ public class StudentController {
     // http://localhost:8080/students/query?id=1&firstname=harshal&lastname=savaliya
 
     @GetMapping("students/query")
-    public Student getStudentByRollNumber(@RequestParam("id") String rollNumber, @RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName) {
-        return new Student(rollNumber, firstName, lastName);
+    public ResponseEntity<Student> getStudentByRollNumber(@RequestParam("id") String rollNumber, @RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName) {
+        Student student = new Student(rollNumber, firstName, lastName);
+
+        return ResponseEntity.ok(student);
     }
 
     // POST Methods
@@ -53,29 +60,29 @@ public class StudentController {
 
     @PostMapping("students/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public Student createStudent(@RequestBody Student student) {
+    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
         System.out.println(student.getRollNumber());
         System.out.println(student.getFirstName());
         System.out.println(student.getLastName());
 
-        return student;
+        return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
     // PUT Methods
     // http://localhost:8080/students/update/1
     @PutMapping("students/update/{id}")
-    public Student updateStudent(@RequestBody Student student, @PathVariable("id") String rollNumber) {
+    public ResponseEntity<Student> updateStudent(@RequestBody Student student, @PathVariable("id") String rollNumber) {
         System.out.println(student.getFirstName());
         System.out.println(student.getLastName());
 
-        return student;
+        return ResponseEntity.ok(student);
     }
 
     // DELETE Methods
     // http://localhost:8080/students/delete/1
     @DeleteMapping("students/delete/{id}")
-    public String deleteStudent(@PathVariable("id") String rollNumber) {
+    public ResponseEntity<String> deleteStudent(@PathVariable("id") String rollNumber) {
         System.out.println(rollNumber);
-        return "Student deleted Successfully";
+        return ResponseEntity.ok("Student deleted Successfully");
     }
 }
