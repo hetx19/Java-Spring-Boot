@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("students")
 public class StudentController {
     // GET Methods
 
@@ -22,7 +23,7 @@ public class StudentController {
 
 
     // http://localhost:8080/students
-    @GetMapping("students")
+    @GetMapping
     public ResponseEntity<List<Student>> getStudents() {
         List<Student> students = new ArrayList<>();
 
@@ -37,7 +38,7 @@ public class StudentController {
     // Rest API with Path Variable
 
     // http://localhost:8080/students/1/harshal/savaliya
-    @GetMapping("students/{id}/{first-name}/{last-name}")
+    @GetMapping("{id}/{first-name}/{last-name}")
     public ResponseEntity<Student> getStudentDetails(@PathVariable("id") String rollNumber, @PathVariable("first-name") String firstName, @PathVariable("last-name") String lastName) {
         Student student = new Student(rollNumber, firstName, lastName);
 
@@ -48,7 +49,7 @@ public class StudentController {
 
     // http://localhost:8080/students/query?id=1&firstname=harshal&lastname=savaliya
 
-    @GetMapping("students/query")
+    @GetMapping("query")
     public ResponseEntity<Student> getStudentByRollNumber(@RequestParam("id") String rollNumber, @RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName) {
         Student student = new Student(rollNumber, firstName, lastName);
 
@@ -58,7 +59,7 @@ public class StudentController {
     // POST Methods
     // http://localhost:8080/students/create
 
-    @PostMapping("students/create")
+    @PostMapping("create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
         System.out.println(student.getRollNumber());
@@ -70,7 +71,7 @@ public class StudentController {
 
     // PUT Methods
     // http://localhost:8080/students/update/1
-    @PutMapping("students/update/{id}")
+    @PutMapping("update/{id}")
     public ResponseEntity<Student> updateStudent(@RequestBody Student student, @PathVariable("id") String rollNumber) {
         System.out.println(student.getFirstName());
         System.out.println(student.getLastName());
@@ -80,7 +81,7 @@ public class StudentController {
 
     // DELETE Methods
     // http://localhost:8080/students/delete/1
-    @DeleteMapping("students/delete/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable("id") String rollNumber) {
         System.out.println(rollNumber);
         return ResponseEntity.ok("Student deleted Successfully");
