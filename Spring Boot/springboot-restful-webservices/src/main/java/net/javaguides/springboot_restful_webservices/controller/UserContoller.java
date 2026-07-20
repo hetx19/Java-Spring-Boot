@@ -1,17 +1,18 @@
 package net.javaguides.springboot_restful_webservices.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import net.javaguides.springboot_restful_webservices.dto.UserDto;
-import net.javaguides.springboot_restful_webservices.entity.User;
-import net.javaguides.springboot_restful_webservices.exception.ErrorDetails;
-import net.javaguides.springboot_restful_webservices.exception.ResourceNotFoundException;
+//import net.javaguides.springboot_restful_webservices.entity.User;
+//import net.javaguides.springboot_restful_webservices.exception.ErrorDetails;
+//import net.javaguides.springboot_restful_webservices.exception.ResourceNotFoundException;
 import net.javaguides.springboot_restful_webservices.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
+//import org.springframework.web.context.request.WebRequest;
 
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -21,7 +22,7 @@ public class UserContoller {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user) {
         UserDto savedUser = userService.createUser(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
@@ -39,7 +40,7 @@ public class UserContoller {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @RequestBody UserDto user) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @RequestBody @Valid UserDto user) {
         user.setId(id);
         UserDto updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
