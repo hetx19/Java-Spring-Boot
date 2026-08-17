@@ -1,11 +1,22 @@
 package net.javaguides.employee.dto;
 
+import java.util.List;
+
 public class DepartmentDto {
     private Long id;
     private String departmentName;
     private String departmentDescription;
+    private List<EmployeeDto> employees;
 
     public DepartmentDto() {
+    }
+
+    public List<EmployeeDto> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<EmployeeDto> employees) {
+        this.employees = employees;
     }
 
     public void setId(Long id) {

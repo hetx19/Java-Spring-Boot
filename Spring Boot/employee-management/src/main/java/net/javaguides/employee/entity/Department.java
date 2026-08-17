@@ -2,6 +2,8 @@ package net.javaguides.employee.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "departments")
 public class Department {
@@ -14,6 +16,9 @@ public class Department {
 
     @Column(nullable = false)
     private String departmentDescription;
+
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Employee> employees;
 
     public void setId(Long id) {
         this.id = id;
@@ -46,5 +51,13 @@ public class Department {
 
     public String getDepartmentDescription() {
         return departmentDescription;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 }
